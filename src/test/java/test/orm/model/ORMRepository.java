@@ -1,13 +1,11 @@
 package test.orm.model;
 
 import test.orm.Database;
-import test.orm.DatabaseTests;
+import test.orm.serialize.IOAdapter;
 
-import javax.xml.transform.Result;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -196,18 +194,14 @@ public abstract class ORMRepository<T extends ORMEntity> {
     }
 
     private void setArguments(PreparedStatement stmt, T entity) throws Exception {
-        int index = 1;
+        JDBCWriter writer = new JDBCWriter(stmt);
         for (Field field : this.ormFields) {
             Object v = field.get(entity);
-            Class c = v.getClass();
-            if (c == String.class) {
-                stmt.setString(index, (String)v);
-            }
-            else if (Long.class.isAssignableFrom(c)) {
-                stmt.setLong(index, (long)v);
-            }
-            //...
-            index++;
+            Class c = field.getType();
+            IOAdapter adapter = IOAdapter.getAdapter(c);
+            adapter.write(v, writer);
+
+            writer.incrementIndex();
         }
     }
 
@@ -262,18 +256,16 @@ public abstract class ORMRepository<T extends ORMEntity> {
             long id = result.getLong(1);
             this.idField.set(entity, id);
 
-            int index = 2;
+            JDBCReader reader = new JDBCReader(result);
+            reader.incrementIndex();
+
             for (Field f : this.ormFields) {
                 Class c = f.getType();
-                Object v = null;
-                if (String.class.isAssignableFrom(c)) {
-                    v = result.getString(index);
-                }
-                else if (Long.class.isAssignableFrom(c)) {
-                    v = result.getLong(index);
-                }
+                IOAdapter adapter = IOAdapter.getAdapter(c);
+                Object v = adapter.read(reader);;
                 f.set(entity, v);
-                index++;
+
+                reader.incrementIndex();
             }
             list.add(entity);
         }

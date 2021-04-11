@@ -2,18 +2,14 @@ package test.orm;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.orm.model.ORMTables;
-import test.orm.model.PostRepository;
-import test.orm.model.User;
-import test.orm.model.UserRepository;
+import test.orm.model.*;
 
+import javax.crypto.spec.RC2ParameterSpec;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ReflectPermission;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ORMTests {
 
     @BeforeEach
-    public void deleteDB() {
+    public void deleteDB() throws IOException {
         String dir = System.getProperty("user.dir");
         String path = dir + "/test_db";
         File file = new File(path);
@@ -39,14 +35,25 @@ public class ORMTests {
         user.setPassword("password!@#$$");
         user.setUsername("Lee JongHyeok");
 
+        RfcEmailAddress rfc = new RfcEmailAddress();
+        rfc.setName("jonghoon");
+        rfc.setEmail("jonghoon.lee@gmail.com");
+        user.setRfcEmailAddress(rfc);
+
         long id = repo.save(user);
 
         assertTrue(id > 0);
+
+
 
         User created = repo.findById(id);
 
         assertEquals(user.getEmailAddress(), created.getEmailAddress());
         assertEquals(user.getPassword(), created.getPassword());
+
+        RfcEmailAddress createdRfc = created.getRfcEmailAddress();
+        assertEquals(rfc.getEmail(), createdRfc.getEmail());
+        assertEquals(rfc.getName(), createdRfc.getName());
     }
 
     @Test

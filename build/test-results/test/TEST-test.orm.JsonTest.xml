@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.orm.JsonTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-04-11T08:13:10" hostname="maczziriui-MacBookAir.local" time="0.018">
+  <properties/>
+  <testcase name="testSerialize()" classname="test.orm.JsonTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

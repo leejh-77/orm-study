@@ -1,0 +1,25 @@
+{
+    "emailAddress" : "Jonghoon@kddd",
+    "password" : "sdkjfoijdnf",
+    "rfcEmailAddress" : {
+        "email" : "jonghoon.lee@gmail.com",
+        "name" : "Jonghoon Lee"
+        "friendEmailAddress" : {
+            "email" : "jonghoon.lee@gmail.com",
+            "name" : "Jonghoon Lee"
+            "friendEmailAddress" : null
+        }
+    }
+}
+
+{
+"id":29383,
+"email":"jonghoon.lee@gmail.com",
+"name":"Jonghoon Lee",
+"friendAddress":{
+"id":1233,
+"email":"jonghyeok@gmail.com",
+"name":"JongHyeok Lee",
+"friendAddress":null
+}
+}

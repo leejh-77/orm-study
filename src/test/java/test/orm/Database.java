@@ -14,7 +14,7 @@ public class Database {
         try {
             instance = new Database();
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 

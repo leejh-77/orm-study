@@ -8,6 +8,8 @@ public class User extends ORMEntity {
 
     private String username;
 
+    private RfcEmailAddress rfcEmailAddress;
+
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -30,5 +32,13 @@ public class User extends ORMEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public RfcEmailAddress getRfcEmailAddress() {
+        return rfcEmailAddress;
+    }
+
+    public void setRfcEmailAddress(RfcEmailAddress rfcEmailAddress) {
+        this.rfcEmailAddress = rfcEmailAddress;
     }
 }

@@ -2,6 +2,8 @@ package test.orm.model;
 
 import test.orm.Database;
 
+import java.util.List;
+
 public class PostRepository extends ORMRepository<Post> {
 
     public PostRepository(Database database) {
@@ -11,5 +13,9 @@ public class PostRepository extends ORMRepository<Post> {
     @Override
     Class<Post> getORMClass() {
         return Post.class;
+    }
+
+    public List<Post> findByUserId(Long id) {
+        return super.findByQuery("accountId = " + id);
     }
 }

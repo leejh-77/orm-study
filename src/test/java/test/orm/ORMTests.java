@@ -44,8 +44,6 @@ public class ORMTests {
 
         assertTrue(id > 0);
 
-
-
         User created = repo.findById(id);
 
         assertEquals(user.getEmailAddress(), created.getEmailAddress());
@@ -148,5 +146,22 @@ public class ORMTests {
 
         long id = repo.save(user);
         assertTrue(id > 0);
+    }
+
+    @Test
+    public void createPost() {
+        ORMTables.database.executeInTransaction(() -> {
+            User user = new User();
+            user.setUsername("jonghyeok");
+
+            long id = ORMTables.User.save(user);
+
+            Post post = new Post();
+            post.setAccountId(id);
+            post.setSubject("Subject");
+            post.setBody("New post");
+
+            ORMTables.Post.save(post);
+        });
     }
 }
